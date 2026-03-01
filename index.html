@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chrisma Paulina Stévène MONAMPASSI – Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ============================================================
+       VARIABLES CSS
+       Toutes les couleurs et polices définies en un seul endroit.
+       Pour changer une couleur sur tout le site : on la change ici.
+    ============================================================ */
+    :root {
+      --noir:       #0A0A0F;
+      --blanc:      #F5F3EE;
+      --or:         #C9A96E;
+      --or-clair:   #E8D5B0;
+      --gris:       #6B6B7B;
+      --gris-clair: #1A1A24;
+
+      --titre: 'Cormorant Garamond', serif;
+      --texte: 'DM Sans', sans-serif;
+
+      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html  { scroll-behavior: smooth; }
+    body  {
+      background-color: var(--noir);
+      color: var(--blanc);
+      font-family: var(--texte);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       CURSEUR PERSONNALISÉ
+    ============================================================ */
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--or);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--or);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,10,15,0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201,169,110,0.12);
+    }
+    .nav-logo {
+      font-family: var(--titre); font-size: 1.2rem; font-weight: 600;
+      color: var(--or); letter-spacing: 0.05em; text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--blanc); text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0.6; transition: var(--transition); position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--or); transition: width 0.3s ease;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--or); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ============================================================
+       HÉRO
+    ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -20%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -20%; left: -10%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(139,115,85,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-content { max-width: 820px; z-index: 1; animation: fadeInUp 1s ease forwards; }
+
+    .hero-tag {
+      font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--or); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--or); }
+
+    .hero h1 {
+      font-family: var(--titre);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300; line-height: 1.05;
+      margin-bottom: 1.2rem; letter-spacing: -0.02em;
+    }
+    .hero h1 span { color: var(--or); font-weight: 700; font-style: italic; }
+
+    .hero-role {
+      font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(245,243,238,0.4); margin-bottom: 1.5rem;
+    }
+    .hero-desc {
+      font-size: 1.05rem; color: rgba(245,243,238,0.6);
+      max-width: 520px; margin-bottom: 3rem; line-height: 1.9;
+    }
+    .hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      padding: 1rem 2.5rem; background: var(--or); color: var(--noir);
+      text-decoration: none; font-size: 0.82rem; letter-spacing: 0.1em;
+      text-transform: uppercase; font-weight: 500; transition: var(--transition);
+    }
+    .btn-primary:hover { background: var(--or-clair); transform: translateY(-2px); }
+
+    .btn-secondary {
+      padding: 1rem 2.5rem; border: 1px solid rgba(201,169,110,0.35);
+      color: var(--or); text-decoration: none; font-size: 0.82rem;
+      letter-spacing: 0.1em; text-transform: uppercase; transition: var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--or); background: rgba(201,169,110,0.07); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; right: 4rem; bottom: 3rem;
+      writing-mode: vertical-rl; font-size: 0.68rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris);
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .hero-scroll::after {
+      content: ''; width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--or), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    /* ============================================================
+       SECTIONS
+    ============================================================ */
+    section { padding: 7rem 4rem; }
+
+    .section-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 5rem; }
+    .section-number {
+      font-family: var(--titre); font-size: 5rem; font-weight: 700;
+      color: rgba(201,169,110,0.12); line-height: 1; letter-spacing: -0.05em;
+    }
+    .section-title-group h2 {
+      font-family: var(--titre); font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300; letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .section-title-group h2 em { color: var(--or); font-style: italic; }
+    .section-line { width: 60px; height: 1px; background: var(--or); margin-top: 0.8rem; }
+
+    /* ============================================================
+       À PROPOS
+    ============================================================ */
+    .about { background: var(--gris-clair); }
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6rem; align-items: start; }
+    .about-text p { color: rgba(245,243,238,0.65); margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.9; }
+
+    .about-values { display: flex; flex-direction: column; gap: 2rem; }
+    .value-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .value-number {
+      font-family: var(--titre); font-size: 2rem;
+      color: rgba(201,169,110,0.25); font-weight: 700; line-height: 1; min-width: 2.5rem;
+    }
+    .value-content h4 { font-family: var(--titre); font-size: 1.15rem; font-weight: 600; color: var(--or-clair); margin-bottom: 0.3rem; }
+    .value-content p { font-size: 0.88rem; color: rgba(245,243,238,0.5); line-height: 1.6; }
+
+    /* ============================================================
+       COMPÉTENCES
+    ============================================================ */
+    .skills-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+    .skill-card {
+      padding: 2.5rem; border: 1px solid rgba(201,169,110,0.1);
+      background: rgba(201,169,110,0.02); transition: var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .skill-card::after {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 0; height: 0; border-style: solid;
+      border-width: 0 35px 35px 0;
+      border-color: transparent rgba(201,169,110,0.15) transparent transparent;
+      transition: var(--transition);
+    }
+    .skill-card:hover { border-color: rgba(201,169,110,0.35); background: rgba(201,169,110,0.05); transform: translateY(-6px); }
+    .skill-card:hover::after { border-color: transparent var(--or) transparent transparent; }
+
+    .skill-category { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--or); margin-bottom: 1rem; }
+    .skill-card h3 { font-family: var(--titre); font-size: 1.5rem; font-weight: 600; color: var(--blanc); margin-bottom: 0.8rem; }
+    .skill-card p { font-size: 0.88rem; color: rgba(245,243,238,0.5); line-height: 1.7; margin-bottom: 1.5rem; }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      padding: 0.28rem 0.75rem; border: 1px solid rgba(201,169,110,0.2);
+      font-size: 0.72rem; letter-spacing: 0.06em; color: rgba(245,243,238,0.55);
+      transition: var(--transition);
+    }
+    .tag:hover { border-color: var(--or); color: var(--or); }
+
+    /* ============================================================
+       PASSIONS
+    ============================================================ */
+    .passions { background: var(--gris-clair); }
+    .passions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+    .passion-item {
+      padding: 3rem 2rem; text-align: center;
+      border: 1px solid rgba(201,169,110,0.08);
+      transition: var(--transition); position: relative;
+    }
+    .passion-item::before {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%); width: 0; height: 2px;
+      background: var(--or); transition: width 0.4s ease;
+    }
+    .passion-item:hover { background: rgba(201,169,110,0.04); border-color: rgba(201,169,110,0.2); }
+    .passion-item:hover::before { width: 60%; }
+
+    .passion-icon { font-size: 2.2rem; margin-bottom: 1.5rem; display: block; }
+    .passion-item h3 { font-family: var(--titre); font-size: 1.4rem; font-weight: 600; color: var(--or-clair); margin-bottom: 0.8rem; }
+    .passion-item p { font-size: 0.88rem; color: rgba(245,243,238,0.5); line-height: 1.7; }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    .contact-wrapper { max-width: 680px; margin: 0 auto; text-align: center; }
+    .contact-intro { font-family: var(--titre); font-size: clamp(2.2rem, 5vw, 4.5rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.5rem; }
+    .contact-intro em { color: var(--or); font-style: italic; }
+    .contact-sub { color: rgba(245,243,238,0.45); margin-bottom: 3.5rem; font-size: 1rem; line-height: 1.8; }
+
+    .contact-email {
+      display: inline-block; font-family: var(--titre);
+      font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--or);
+      text-decoration: none; border-bottom: 1px solid rgba(201,169,110,0.3);
+      padding-bottom: 0.3rem; transition: var(--transition); word-break: break-all;
+    }
+    .contact-email:hover { border-color: var(--or); letter-spacing: 0.03em; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      padding: 2rem 4rem; border-top: 1px solid rgba(201,169,110,0.08);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: rgba(245,243,238,0.25);
+    }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollLine {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .about-grid    { grid-template-columns: 1fr; gap: 3rem; }
+      .passions-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav            { padding: 1.2rem 1.5rem; }
+      .nav-links     { display: none; }
+      .hero          { padding: 0 1.5rem; }
+      section        { padding: 5rem 1.5rem; }
+      .hero-scroll   { display: none; }
+      footer         { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor"      id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#accueil" class="nav-logo">C.P.S.M</a>
+    <ul class="nav-links">
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#passions">Passions</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HÉRO -->
+  <section class="hero" id="accueil">
+    <div class="hero-content">
+      <div class="hero-tag">Développeuse Web & Logiciel · CFI-CIRAS · Congo</div>
+      <h1>
+        <span>Chrisma</span><br>
+        Paulina Stévène<br>
+        MONAMPASSI
+      </h1>
+      <p class="hero-role">Licence Génie Logiciel · Bac+3</p>
+      <p class="hero-desc">
+        Développeuse passionnée, je conçois des solutions numériques robustes
+        et orientées impact. Rigueur technique, créativité et sens du détail
+        au service de vos projets.
+      </p>
+      <div class="hero-buttons">
+        <a href="#competences" class="btn-primary">Mes compétences</a>
+        <a href="#contact"     class="btn-secondary">Me contacter</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Défiler</div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section class="about" id="apropos">
+    <div class="section-header reveal">
+      <div class="section-number">01</div>
+      <div class="section-title-group">
+        <h2>À <em>propos</em></h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          Je m'appelle <strong>Chrisma Paulina Stévène MONAMPASSI</strong>,
+          développeuse web et logiciel en fin de cycle Licence au CFI-CIRAS.
+          Je me spécialise dans la conception d'applications web, la gestion
+          de bases de données et la sécurité des systèmes informatiques.
+        </p>
+        <p>
+          Dotée d'une grande curiosité intellectuelle, j'aborde chaque projet
+          avec méthode et précision. Je m'investis pleinement dans la maîtrise
+          de chaque technologie que j'utilise — comprendre en profondeur est
+          pour moi une exigence, pas une option.
+        </p>
+        <p>
+          Je suis actuellement ouverte aux opportunités professionnelles :
+          stage, emploi ou collaboration sur des projets innovants.
+        </p>
+      </div>
+      <div class="about-values reveal">
+        <div class="value-item">
+          <div class="value-number">01</div>
+          <div class="value-content">
+            <h4>Rigueur technique</h4>
+            <p>Je maîtrise chaque technologie que j'utilise. Zéro approximation dans mon code.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-number">02</div>
+          <div class="value-content">
+            <h4>Apprentissage continu</h4>
+            <p>Je me forme constamment sur les nouvelles technologies et les bonnes pratiques du secteur.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-number">03</div>
+          <div class="value-content">
+            <h4>Vision orientée impact</h4>
+            <p>Je conçois des solutions concrètes qui répondent à de vrais problèmes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="competences">
+    <div class="section-header reveal">
+      <div class="section-number">02</div>
+      <div class="section-title-group">
+        <h2>Mes <em>compétences</em></h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+    <div class="skills-wrapper">
+
+      <div class="skill-card reveal">
+        <div class="skill-category">Frontend</div>
+        <h3>Développement Web</h3>
+        <p>Conception d'interfaces modernes, responsives et accessibles, avec attention au design et à l'expérience utilisateur.</p>
+        <div class="skill-tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Responsive Design</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-category">Backend</div>
+        <h3>Développement Serveur</h3>
+        <p>Développement d'APIs REST performantes et structurées, avec une logique métier claire et maintenable.</p>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Flask</span>
+          <span class="tag">API REST</span>
+          <span class="tag">Docker</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-category">Données</div>
+        <h3>Bases de Données</h3>
+        <p>Conception de schémas relationnels, requêtes optimisées et gestion de bases de données robustes.</p>
+        <div class="skill-tags">
+          <span class="tag">SQL</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Modélisation</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-category">Sécurité</div>
+        <h3>Sécurité Informatique</h3>
+        <p>Mise en place de systèmes d'authentification sécurisés, chiffrement et protection des données.</p>
+        <div class="skill-tags">
+          <span class="tag">JWT</span>
+          <span class="tag">Bcrypt</span>
+          <span class="tag">HTTPS/TLS</span>
+          <span class="tag">Pare-feu</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-category">Infrastructure</div>
+        <h3>Réseaux & Systèmes</h3>
+        <p>Configuration de réseaux locaux, gestion de serveurs Linux et protocoles de communication.</p>
+        <div class="skill-tags">
+          <span class="tag">Linux</span>
+          <span class="tag">Réseaux LAN</span>
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">MQTT</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-category">Méthodes</div>
+        <h3>Génie Logiciel</h3>
+        <p>Application des bonnes pratiques : analyse des besoins, conception, documentation et versioning.</p>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">UML</span>
+          <span class="tag">Conception</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PASSIONS -->
+  <section class="passions" id="passions">
+    <div class="section-header reveal">
+      <div class="section-number">03</div>
+      <div class="section-title-group">
+        <h2>Mes <em>passions</em></h2>
+        <div class="section-line"></div>
+      </div>
+    </div>
+    <div class="passions-grid">
+
+      <div class="passion-item reveal">
+        <span class="passion-icon">⟨/⟩</span>
+        <h3>Programmation</h3>
+        <p>La programmation est bien plus qu'un outil — c'est un langage de création. J'aime comprendre en profondeur chaque concept et construire des solutions solides et élégantes.</p>
+      </div>
+
+      <div class="passion-item reveal">
+        <span class="passion-icon">◈</span>
+        <h3>Développement Web</h3>
+        <p>Je suis fascinée par la capacité du web à connecter les gens et à transformer des idées en expériences accessibles à tous, depuis n'importe quel appareil.</p>
+      </div>
+
+      <div class="passion-item reveal">
+        <span class="passion-icon">⬡</span>
+        <h3>Entrepreneuriat</h3>
+        <p>Je crois profondément que la technologie peut transformer les réalités locales. Mon ambition est de construire des solutions numériques à impact réel.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-wrapper reveal">
+      <h2 class="contact-intro">Travaillons<br><em>ensemble</em></h2>
+      <p class="contact-sub">
+        Je suis ouverte à toute opportunité professionnelle : stage, emploi ou collaboration.
+        N'hésitez pas à me contacter.
+      </p>
+      <a href="mailto:chrismapaulinamonampassi@gmail.com" class="contact-email">
+        chrismapaulinamonampassi@gmail.com
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Chrisma Paulina Stévène MONAMPASSI</span>
+    <span>Licence Génie Logiciel · CFI-CIRAS · Congo</span>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // ---- CURSEUR PERSONNALISÉ ----
+    // On récupère les deux éléments du curseur dans le HTML
+    const cursor     = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+
+    // À chaque mouvement de souris, on repositionne notre curseur
+    // e.clientX = position horizontale | e.clientY = position verticale
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left     = e.clientX + 'px';
+      cursor.style.top      = e.clientY + 'px';
+      cursorRing.style.left = e.clientX + 'px';
+      cursorRing.style.top  = e.clientY + 'px';
+    });
+
+    // ---- ANIMATIONS AU DÉFILEMENT ----
+    // On sélectionne tous les éléments avec la classe "reveal"
+    const reveals = document.querySelectorAll('.reveal');
+
+    // IntersectionObserver surveille quand un élément entre dans l'écran
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Si l'élément est visible à l'écran, on déclenche l'animation
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1 // Se déclenche quand 10% de l'élément est visible
+    });
+
+    // On observe chaque élément "reveal"
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
